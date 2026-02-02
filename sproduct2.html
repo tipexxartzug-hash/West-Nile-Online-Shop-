@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="comacial .css">
+</head>
+<body>
+
+    <section id="header">
+        <a href="#"><img src="tipexx/14.png" class="logo" alt=""></a> 
+        <div>
+            <ul id="navbar">
+                <li><a href="comacia.html">Home</a></li>
+                <li><a href="fashion.html">Fashion</a></li>
+                <li><a class="active" href="electronic.html">Electronic</a></li>
+                <li><a class="active" href="phone.html">Phones</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li id="close"><i class="fas fa-times"></i></li> <li id="lg-bag"><a href="cart.htm"><i class="fas fa-shopping-bag"></i></a></li>
+            </ul>
+        </div> 
+        <div id="mobile">
+            <i id="bar" class="fas fa-outdent"></i> </div>
+    </section>
+
+    <section id="prodetails" class="section-p1">
+        <div class="single-pro-image">
+            <img src="" width="100%" id="MainImg" alt="">
+
+            <div class="small-img-group">
+                <div class="small-img-col">
+                    <img src="" width="100%" class="small-img" alt="">
+                </div>
+                <div class="small-img-col">
+                    <img src="" width="100%" class="small-img" alt="">
+                </div>
+                <div class="small-img-col">
+                    <img src="" width="100%" class="small-img" alt="">
+                </div>
+                <div class="small-img-col">
+                    <img src="" width="100%" class="small-img" alt="">
+                </div>
+            </div>
+        </div>
+
+        <div class="single-pro-details">
+            <h6>Select & Order</h6>
+            <h4 id="productName">Loading Product...</h4> 
+            <h2 id="productPrice">Please select condition...</h2> 
+            
+            <select id="sizeSelector"> 
+                <option value="Select Conditions">Select Conditions</option>
+                <option value="Original & New">Original & New </option>
+                <option value="Copy & New">Copy & New</option>
+                <option value="Original & Used">Original & Used</option>
+                <option value="Good price">Good price</option>
+            </select>
+            
+            <input type="number" value="1" id="quantityInput"> 
+            <button class="nomal" onclick="sendToWhatsApp()">Order Now</button> 
+            
+            <h4>Product Details</h4>
+            <span id="productDesc">
+                Strong and Original
+            </span>
+        </div>
+    </section>
+
+    <section id="newsletter" class="section-p1 section-m1">
+        <div class="newstext">
+            <h4>Sign Up For Newsletters</h4>
+            <p>Get E-mail Updates About Our Latest Shop & <span>Special Offers.</span></p>
+        </div>
+        <div class="form"> 
+            <input type="text" placeholder="Your email address">
+            <button class="nomal">Sign Up</button>
+        </div>
+    </section>
+
+    <footer class="section-p1">
+        <div class="col">
+            <img class="logo" src="tipexx/14.png" alt="Company Logo">
+            <h4>Contact</h4>
+            <p><strong>Address:</strong> Matugga, Bobo Road, High Way, KateleMwa</p>
+            <p><strong>Hours:</strong> 6:00am - 10:00pm Monday - Saturday</p>
+            <p><strong>Customer care:</strong> +256761680128 / +256791658042</p>
+        </div>
+        <div class="col">
+            <h4>About</h4>
+            <a href="#">About Us</a>
+            <a href="#">Delivery Information</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms & Conditions</a>
+            <a href="#">Contact Us</a>
+        </div>
+        <div class="col">
+            <h4>My Account</h4>
+            <a href="#">Sign In</a>
+            <a href="#">View Cart</a>
+            <a href="#">My Wishlist</a>
+            <a href="#">Track My Order</a>
+            <a href="#">Help</a>
+        </div>
+        <div class="col install">
+            <h4>Install App</h4>
+            <p>From App Store or Google Play</p>
+            <div class="row">
+                <img src="tipexx/app.jpg" alt="App Store Badge">
+                <img src="tipexx/app.jpg" alt="Google Play Badge">
+            </div>
+            <p>Secure Payment Gateways</p>
+            <img src="tipexx/pay.png" alt="Payment Methods">
+        </div>
+        <div class="copyright">
+            <p>Since 2025</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- 1. NAVIGATION LOGIC ---
+        const bar = document.getElementById('bar');
+        const close = document.getElementById('close');
+        const nav = document.getElementById('navbar');
+
+        if (bar) {
+            bar.addEventListener('click', () => { nav.classList.add('active'); });
+        }
+        if (close) {
+            close.addEventListener('click', () => { nav.classList.remove('active'); });
+        }
+
+        // --- 2. IMAGE GALLERY LOGIC ---
+        var MainImg = document.getElementById("MainImg");
+        var smalling = document.getElementsByClassName("small-img");
+
+        for (let i = 0; i < smalling.length; i++) {
+            smalling[i].onclick = function() {
+                MainImg.src = smalling[i].src;
+            }
+        }
+
+        // --- 3. DYNAMIC LOADING & HIDDEN PRICE LOGIC ---
+        let productActualPrice = ""; // Hidden variable to store price from URL
+
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const name = urlParams.get('name');
+            const price = urlParams.get('price');
+            const img1 = urlParams.get('img1');
+            const img2 = urlParams.get('img2');
+            const img3 = urlParams.get('img3');
+            const img4 = urlParams.get('img4');
+
+            if (name) document.getElementById("productName").innerText = name;
+            
+            // Store the price but do not show it yet
+            if (price) {
+                productActualPrice = price;
+                document.getElementById("productPrice").innerText = "Please select condition...";
+            }
+
+            if (img1) { MainImg.src = img1; smalling[0].src = img1; }
+            if (img2) smalling[1].src = img2;
+            if (img3) smalling[2].src = img3;
+            if (img4) smalling[3].src = img4;
+        };
+
+        // --- 4. SHOW PRICE ON SELECTION ---
+        document.getElementById("sizeSelector").onchange = function() {
+            const priceDisplay = document.getElementById("productPrice");
+            if (this.value !== "Select Conditions") {
+                priceDisplay.innerText = "Ug shs " + productActualPrice + "/=";
+            } else {
+                priceDisplay.innerText = "Please select condition...";
+            }
+        };
+
+        // --- 5. WHATSAPP LOGIC ---
+        function sendToWhatsApp() {
+            const phoneNumber = "256761680128"; 
+            const name = document.getElementById("productName").innerText;
+            const price = document.getElementById("productPrice").innerText;
+            const condition = document.getElementById("sizeSelector").value;
+            const quantity = document.getElementById("quantityInput").value;
+
+            // Prevent order if default option is selected
+            if (condition === "Select Conditions") {
+                alert("Please select a Condition before ordering!");
+                return;
+            }
+
+            const message = encodeURIComponent(
+                `Hello! I would like to order:\n` + 
+                `*Product:* ${name}\n` + 
+                `*Condition:* ${condition}\n` + 
+                `*Quantity:* ${quantity}\n` + 
+                `*Price:* ${price}`
+            );
+            window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+        }
+    </script>
+</body>
+</html>
